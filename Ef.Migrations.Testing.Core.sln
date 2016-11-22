@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.Migrations.Testing.Core.Fixtures", "EF.Migrations.Testing.Core.Fixtures\EF.Migrations.Testing.Core.Fixtures.csproj", "{5A1179DA-2C5F-43C1-83FC-08213C2BDEE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.Migrations.Testing.Core.Data", "EF.Migrations.Testing.Core.Data\EF.Migrations.Testing.Core.Data.csproj", "{198CD693-FE42-43DC-806D-778DA22139EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ef.Migrations.Testing.Core", "Ef.Migrations.Testing.Core\Ef.Migrations.Testing.Core.csproj", "{24D19E24-2330-4723-B04D-C280C605C70D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A1179DA-2C5F-43C1-83FC-08213C2BDEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1179DA-2C5F-43C1-83FC-08213C2BDEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1179DA-2C5F-43C1-83FC-08213C2BDEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1179DA-2C5F-43C1-83FC-08213C2BDEE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{198CD693-FE42-43DC-806D-778DA22139EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{198CD693-FE42-43DC-806D-778DA22139EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{198CD693-FE42-43DC-806D-778DA22139EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{198CD693-FE42-43DC-806D-778DA22139EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D19E24-2330-4723-B04D-C280C605C70D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D19E24-2330-4723-B04D-C280C605C70D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D19E24-2330-4723-B04D-C280C605C70D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D19E24-2330-4723-B04D-C280C605C70D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

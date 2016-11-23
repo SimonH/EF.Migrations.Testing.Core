@@ -12,20 +12,21 @@ namespace Ef.Migrations.Testing.Core
 {
     public class MigratorTestingDecorator : MigratorBase
     {
-        private DbMigrator innerMigrator;
+        private readonly DbMigrator _innerMigrator;
+        private readonly List<MigrationOperation> _operations = new List<MigrationOperation>();
         public MigratorTestingDecorator(DbMigrator innerMigrator) : base(innerMigrator)
         {
             if (innerMigrator == null)
             {
                 throw new ArgumentNullException(nameof(innerMigrator));
             }
-            this.innerMigrator = innerMigrator;
+            this._innerMigrator = innerMigrator;
         }
 
         private IEnumerable<MigrationOperation> ApplyMigration(string migrationId, bool isUp)
         {
-            var types = innerMigrator.Configuration.GetType().Assembly.GetTypes();
-            var type = innerMigrator.Configuration.GetType().Assembly.GetTypes().FirstOrDefault(t => string.Equals(t.Name, migrationId.Substring(16), StringComparison.OrdinalIgnoreCase));
+            var types = _innerMigrator.Configuration.GetType().Assembly.GetTypes();
+            var type = _innerMigrator.Configuration.GetType().Assembly.GetTypes().FirstOrDefault(t => string.Equals(t.Name, migrationId.Substring(16), StringComparison.OrdinalIgnoreCase));
             if (type == null)
             {
                throw new InvalidOperationException();
@@ -35,11 +36,11 @@ namespace Ef.Migrations.Testing.Core
             method.Invoke(migration, null);
             var property = type.GetProperty("Operations", BindingFlags.NonPublic | BindingFlags.Instance);
             return property.GetValue(migration) as IEnumerable<MigrationOperation>;
-
         }
 
         public void RunMigration(string sourceMigration, string targetMigration)
         {
+            _operations.Clear();
             var migrationIds = GetLocalMigrations().ToList();
             if (migrationIds.Count == 0)
             {
@@ -52,7 +53,12 @@ namespace Ef.Migrations.Testing.Core
                 throw new ArgumentOutOfRangeException("You must supply a valid target migration");
             }
 
-            if (sourceMigrationId != null && string.Equals(sourceMigrationId, targetMigrationId)) // nothing to see here 
+            if (!string.IsNullOrWhiteSpace(sourceMigration) && sourceMigrationId == null)
+            {
+                throw new ArgumentOutOfRangeException("You must supply a valid source migration or null");
+            }
+
+            if (sourceMigrationId != null && string.Equals(sourceMigrationId, targetMigrationId)) // nothing to see or do here 
             {
                 return;
             }
@@ -61,24 +67,9 @@ namespace Ef.Migrations.Testing.Core
             {
                 migrationIds.Reverse();
             }
-            var migrationsToApply = new List<string>();
-            migrationIds.ForEach(id =>
-            {
-                if (isUp 
-                    && (sourceMigrationId == null || string.Compare(id, sourceMigrationId, StringComparison.OrdinalIgnoreCase) > 0)
-                    && string.Compare(id, targetMigrationId, StringComparison.OrdinalIgnoreCase) <= 0)
-                {
-                    migrationsToApply.Add(id);
-                }
-                if (!isUp 
-                    && string.Compare(id, sourceMigrationId, StringComparison.OrdinalIgnoreCase) <= 0
-                    && string.Compare(id, targetMigrationId, StringComparison.OrdinalIgnoreCase) > 0)
-                {
-                    migrationsToApply.Add(id);
-                }
-            });
-            var operations = new List<MigrationOperation>();
-            migrationsToApply.ForEach(id => operations.AddRange(ApplyMigration(id, isUp)));
+            _operations.AddRange(migrationIds.Where(s => s.IsApplicable(isUp, sourceMigrationId, targetMigrationId)).SelectMany(s => ApplyMigration(s, isUp)));
         }
+
+        public IEnumerable<MigrationOperation> Operations => _operations;
     }
 }

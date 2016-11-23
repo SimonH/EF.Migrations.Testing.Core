@@ -38,7 +38,12 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="StructuredData.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructuredData.Common.0.9.0\lib\net40\StructuredData.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,13 +54,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\CreateTableOperationCommand.cs" />
+    <Compile Include="Commands\ISchemaCommand.cs" />
+    <Compile Include="Commands\IMigrationOperationName.cs" />
     <Compile Include="Extensions\MigrationExtensions.cs" />
-    <Compile Include="Interfaces\ISchemaManager.cs" />
-    <Compile Include="Interfaces\ISchemaProvider.cs" />
     <Compile Include="MigratorTestingDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchemaInitiators\GherkinStyleSchemaProvider.cs" />
-    <Compile Include="SchemaInitiators\XmlSchemaProvider.cs" />
+    <Compile Include="SchemaDefinition\ISchema.cs" />
+    <Compile Include="SchemaDefinition\ITable.cs" />
+    <Compile Include="SchemaDefinition\Schema.cs" />
+    <Compile Include="SchemaDefinition\Table.cs" />
+    <Compile Include="Testing\MigrationRunner.cs" />
+    <Compile Include="Testing\MigrationRunnerBase.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
